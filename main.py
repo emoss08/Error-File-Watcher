@@ -3,15 +3,16 @@ import os
 from os.path import isfile, join
 import time
 
-watch_directory = r'errorfile'
+watch_directory = r'errorfile/'
+file_name = 'error'
 pollTime = 5
 
 
 class FileWatcherError(Exception):
+    """ Custom exception for file watcher """
     pass
 
 
-# function to return files in a directory
 def file_in_directory(my_dir: str) -> list[str]:
     """ Returns a list of files in a directory """
     only_files: list[str] = [f for f in listdir(my_dir) if isfile(join(my_dir, f))]
@@ -30,7 +31,7 @@ def error_file_present(new_files: list):
     if new_files == ['error']:
         print('Error file has been created')
         try:
-            os.remove('errorfile/error')
+            os.remove(watch_directory + file_name)
             print('Error file has been removed')
         except FileWatcherError as file_watcher_error:
             print(file_watcher_error)
